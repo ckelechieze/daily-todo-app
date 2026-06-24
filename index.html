@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <!-- Tailwind Link -->
+   <link rel="stylesheet" href="./src/output.css">
+
+   <!-- Font Awesome Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <title>Frontend Mentor | Todo app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 0.6875rem; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body class="bg-[#dde3e9]">
+  <!-- Container -->
+   <section class="bg-[#f6f6f8] m-2 mb-12 pb-8 shadow-[8px_8px_15px_rgba(0,0,0,0.15)]">
+    <!-- Header -->
+    <header class="h-48 bg-center bg-cover" style="background-image: url('./images/bg-mobile-light.jpg')">
+      <!-- Logo/moon-->
+       <div class="flex items-start justify-between w-full px-4 py-8">
+        <h1 class="text-xl font-bold tracking-[0.4em] text-white">TODO</h1>
+        <img class="w-[20px] h-[20px]" src="./images/icon-moon.svg" alt="">
+       </div>
+       <!-- New todo-->
+       <div class="w-[90%] h-12 bg-white mx-auto rounded-lg flex items-center pl-4 gap-4">
+        <div class="w-4 h-4 rounded-full border-2 border-gray-200">
+        </div>
+        <input 
+          id="todo-input"
+          type="text"
+          placeholder="Create a new todo..."
+          class="outline-none w-full text-gray-500"
+          >
+          <button id="add-button" class="bg-gradient-to-r from-[#803bd0] to-[#7a92f6] text-white font-semibold p-[4px] rounded-lg mr-2">Add</button>
+       </div>
+    </header>
+
+    <!-- Todo List -->
+     <div id="todo-list" class="w-[90%] bg-white mx-auto rounded-lg -mt-10">
+
+     </div>
+
+        <!-- Second card-->
+         <div class="flex justify-center items-center gap-8 bg-white w-[90%] mx-auto text-sm py-4 mt-4 text-gray-400 font-semibold rounded-lg">
+          <p class="text-blue-600">All</p>
+          <p>Active</p>
+          <p>Completed</p>
+         </div>
+
+   </section>
+
+   <p class="text-[13px] text-center text-gray-400 my-8">Drag and drop to reorder list</p>
+
+  <footer class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="#">Kelechi Eze</a>.
+  </footer>
+
+  <!-- JavaScript -->
+   <script>
+    //todo arrays
+    let todos = [
+      {
+        text: "Complete online JavaScript course",
+        completed: true
+      },
+      {
+        text: "Jog around the park 3x",
+        completed: false
+      },
+      {
+        text: "10 minutes meditation",
+        completed: false
+      },
+      {
+        text: "Read for 1 hour",
+        completed: true
+      },
+      {
+        text: "Pick up groceries",
+        completed: false
+      },
+      {
+        text: "Complete Todo App on Frontend Mentor",
+        completed: false
+      }
+    ];
+
+    const addBtn = document.getElementById("add-button");
+    const todoInput = document.getElementById("todo-input");
+
+    // Todo render function
+    const todoList = document.getElementById("todo-list");
+
+    function renderTodos() {
+      todoList.innerHTML = "";
+
+      todos.forEach(todo => {
+      const todoEl = document.createElement("div");
+
+      todoEl.innerHTML = `
+      <div class="flex items-center justify-between px-2 gap-6 pt-6">
+        <div class="flex items-center gap-4">
+          <div class="flex w-8 h-8 rounded-full border-2 border-gray-200 items-center justify-center
+          ${todo.completed 
+          ? 'bg-gradient-to-b from-[#79b4fb] to-[#803bd0] text-white' 
+          : 'border-2 border-gray-200'}
+          ">
+          ${todo.completed ? '<i class="fa-solid fa-check"></i>' : ''}
+          </div>
+          <p class="${todo.completed ? 'line-through text-gray-400' : ''}">
+            ${todo.text}</p>
+        </div>
+        <i class="fa-solid fa-x text-gray-400">
+        </i>
+      </div>
+      <hr class="border-t border-gray-300 w-full mx-auto mt-4">
+      `;
+
+      todoList.appendChild(todoEl);
+    });
+  }
+
+  renderTodos();
+
+  //adding new todos
+  function addTodos() {
+    if (todoInput.value.trim() === "") return;
+
+    todos.push({
+        text: todoInput.value,
+        completed: false
+      });
+
+      todoInput.value = "";
+      renderTodos();
+      }
+
+      todoInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          addTodos();
+        }
+      });
+
+      addBtn.addEventListener("click", addTodos);
+   </script>
+</body>
+</html>
