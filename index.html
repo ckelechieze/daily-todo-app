@@ -49,11 +49,19 @@
 
      </div>
 
-        <!-- Second card-->
-         <div class="flex justify-center items-center gap-8 bg-white w-[90%] mx-auto text-sm py-4 mt-4 text-gray-400 font-semibold rounded-lg">
-          <p class="text-blue-600">All</p>
-          <p>Active</p>
-          <p>Completed</p>
+     <!-- Items left-->
+      <div class="flex justify-between p-4 text-gray-400 text-sm">
+        <p id="items-left"></p>
+        <button id="clear-completed" class="hover:text-gray-600">
+          Clear Completed
+        </button>
+      </div>
+
+        <!-- All/Active/Completed Filter-->
+         <div class="flex justify-center items-center gap-8 bg-white w-[90%] mx-auto text-sm py-4 mt-4 font-semibold rounded-lg">
+          <p class="filter-btn hover:scale-150 cursor-pointer" id="all-filter">All</p>
+          <p class="filter-btn hover:scale-150 cursor-pointer" id="active-filter">Active</p>
+          <p class="filter-btn hover:scale-150 cursor-pointer" id="completed-filter">Completed</p>
          </div>
 
    </section>
@@ -68,7 +76,7 @@
   <!-- JavaScript -->
    <script>
     //todo arrays
-    let todos = [
+    let todos = JSON.parse(localStorage.getItem("todos")) || [
       {
         text: "Complete online JavaScript course",
         completed: true
@@ -95,8 +103,16 @@
       }
     ];
 
+    let filter = "all";
+
     const addBtn = document.getElementById("add-button");
     const todoInput = document.getElementById("todo-input");
+    const clearCompletedBtn = document.getElementById("clear-completed");
+
+    const All = document.getElementById("all-filter");
+    const Active = document.getElementById("active-filter");
+    const Completed = document.getElementById("completed-filter");
+
 
     // Todo render function
     const todoList = document.getElementById("todo-list");
@@ -104,7 +120,18 @@
     function renderTodos() {
       todoList.innerHTML = "";
 
-      todos.forEach((todo, index) => {
+      // For Filtering
+      let filteredTodos = todos;
+
+      if (filter === "active") {
+        filteredTodos = todos.filter(todo => !todo.completed);
+      }
+
+      if (filter === "completed") {
+        filteredTodos = todos.filter(todo => todo.completed);
+      }
+
+      filteredTodos.forEach((todo) => {
       const todoEl = document.createElement("div");
 
       todoEl.innerHTML = `
@@ -130,7 +157,8 @@
       const checkBtn = todoEl.querySelector(".todo-check");
 
       checkBtn.addEventListener("click", () => {
-        todos[index].completed =!todos[index].completed;
+        todo.completed =!todo.completed;
+        saveTodos();
         renderTodos();
       });
 
@@ -138,12 +166,20 @@
       const deleteBtn = todoEl.querySelector(".delete-button");
 
       deleteBtn.addEventListener("click", () => {
-      todos.splice(index, 1);
+      todos = todos.filter(t => t !== todo);
+      saveTodos();
       renderTodos();
       });
 
       todoList.appendChild(todoEl);
     });
+
+     // Items left
+      const itemsLeft = document.getElementById("items-left");
+      itemsLeft.textContent = todos.filter(todo => !todo.completed).length + " items left";
+
+      updateFilterColor();
+
   }
 
   renderTodos();
@@ -156,6 +192,7 @@
         text: todoInput.value,
         completed: false
       });
+      saveTodos();
 
       todoInput.value = "";
       renderTodos();
@@ -168,6 +205,59 @@
       });
 
       addBtn.addEventListener("click", addTodos);
+
+      //clicking on Clear completed
+      clearCompletedBtn.addEventListener("click", () => {
+        todos = todos.filter(todo => !todo.completed);
+
+        saveTodos();
+        renderTodos();
+      });
+
+      // Local storage Function
+      function saveTodos() {
+        localStorage.setItem("todos", JSON.stringify(todos));
+      }
+    
+     All.addEventListener("click", () => {
+       filter = "all";
+       console.log(filter);
+       renderTodos();
+     });
+
+     Active.addEventListener("click", () => {
+       filter = "active";
+       renderTodos();
+     });
+
+     Completed.addEventListener("click", () => {
+       filter = "completed";
+       renderTodos();
+     });
+
+     // Updating filter color
+     function updateFilterColor() {
+      const filterBtns = document.querySelectorAll(".filter-btn");
+
+      filterBtns.forEach(btn => {
+        btn.classList.remove("text-blue-400");
+        btn.classList.add("text-gray-400");
+      });
+
+      if (filter === "all") {
+        All.classList.replace("text-gray-400", "text-blue-400");
+      }
+
+      if (filter === "active") {
+        Active.classList.replace("text-gray-400", "text-blue-400");
+      }
+
+      if (filter === "completed") {
+        Completed.classList.replace("text-gray-400", "text-blue-400");
+      }
+     }
+    
+     updateFilterColor();
    </script>
 </body>
 </html>
