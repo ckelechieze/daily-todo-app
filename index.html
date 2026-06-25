@@ -104,13 +104,13 @@
     function renderTodos() {
       todoList.innerHTML = "";
 
-      todos.forEach(todo => {
+      todos.forEach((todo, index) => {
       const todoEl = document.createElement("div");
 
       todoEl.innerHTML = `
       <div class="flex items-center justify-between px-2 gap-6 pt-6">
         <div class="flex items-center gap-4">
-          <div class="flex w-8 h-8 rounded-full border-2 border-gray-200 items-center justify-center
+          <div class="todo-check flex w-8 h-8 rounded-full border-2 border-gray-200 items-center justify-center
           ${todo.completed 
           ? 'bg-gradient-to-b from-[#79b4fb] to-[#803bd0] text-white' 
           : 'border-2 border-gray-200'}
@@ -120,11 +120,27 @@
           <p class="${todo.completed ? 'line-through text-gray-400' : ''}">
             ${todo.text}</p>
         </div>
-        <i class="fa-solid fa-x text-gray-400">
+        <i class="delete-button fa-solid fa-x text-gray-400">
         </i>
       </div>
       <hr class="border-t border-gray-300 w-full mx-auto mt-4">
       `;
+
+      //clicking on checkBtn
+      const checkBtn = todoEl.querySelector(".todo-check");
+
+      checkBtn.addEventListener("click", () => {
+        todos[index].completed =!todos[index].completed;
+        renderTodos();
+      });
+
+      //clicking on cancel button
+      const deleteBtn = todoEl.querySelector(".delete-button");
+
+      deleteBtn.addEventListener("click", () => {
+      todos.splice(index, 1);
+      renderTodos();
+      });
 
       todoList.appendChild(todoEl);
     });
