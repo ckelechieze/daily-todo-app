@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-blue-400: oklch(70.7% 0.165 254.624);
@@ -15,6 +16,7 @@
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-600: oklch(44.6% 0.03 256.802);
+    --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -304,17 +306,26 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-gray-700 {
+    border-color: var(--color-gray-700);
+  }
+  .bg-\[\#2\] {
+    background-color: #2;
+  }
+  .bg-\[\#25\] {
+    background-color: #25;
+  }
+  .bg-\[\#252\] {
+    background-color: #252;
+  }
   .bg-\[\#606de1\] {
     background-color: #606de1;
   }
+  .bg-\[\#25273\] {
+    background-color: #25273;
+  }
   .bg-\[\#25273c\] {
     background-color: #25273c;
-  }
-  .bg-\[\#161620\] {
-    background-color: #161620;
-  }
-  .bg-\[\#161622\] {
-    background-color: #161622;
   }
   .bg-\[\#161722\] {
     background-color: #161722;
@@ -322,26 +333,14 @@
   .bg-\[\#\] {
     background-color: #;
   }
-  .bg-\[\#d\] {
-    background-color: #d;
-  }
-  .bg-\[\#dde3\] {
-    background-color: #dde3;
-  }
   .bg-\[\#dde3e9\] {
     background-color: #dde3e9;
-  }
-  .bg-\[\#dde\] {
-    background-color: #dde;
   }
   .bg-\[\#f6f6f8\] {
     background-color: #f6f6f8;
   }
-  .bg-black {
-    background-color: var(--color-black);
-  }
-  .bg-green-400 {
-    background-color: var(--color-green-400);
+  .bg-red-500 {
+    background-color: var(--color-red-500);
   }
   .bg-red-600 {
     background-color: var(--color-red-600);
@@ -479,6 +478,11 @@
   .outline-none {
     --tw-outline-style: none;
     outline-style: none;
+  }
+  .placeholder\:text-gray-500 {
+    &::placeholder {
+      color: var(--color-gray-500);
+    }
   }
   .hover\:scale-150 {
     &:hover {

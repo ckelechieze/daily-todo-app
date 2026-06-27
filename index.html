@@ -58,7 +58,7 @@
       </div>
 
         <!-- All/Active/Completed Filter-->
-         <div class="flex justify-center items-center gap-8 bg-white w-[90%] mx-auto text-sm py-4 mt-4 font-semibold rounded-lg">
+         <div id="filter-card" class="flex justify-center items-center gap-8 bg-white w-[90%] mx-auto text-sm py-4 mt-4 font-semibold rounded-lg">
           <p class="filter-btn hover:scale-150 cursor-pointer" id="all-filter">All</p>
           <p class="filter-btn hover:scale-150 cursor-pointer" id="active-filter">Active</p>
           <p class="filter-btn hover:scale-150 cursor-pointer" id="completed-filter">Completed</p>
@@ -104,7 +104,7 @@
     ];
 
     let filter = "all";
-    let darkMode = false;
+    let darkMode = JSON.parse(localStorage.getItem("darkMode")) || false;
 
     const addBtn = document.getElementById("add-button");
     const todoInput = document.getElementById("todo-input");
@@ -117,6 +117,7 @@
     const appContainer = document.getElementById("app-container");
     const header = document.getElementById("header");
     const inputContainer = document.getElementById("input-container");
+    const filterCard = document.getElementById("filter-card");
 
 
     // Todo render function
@@ -161,7 +162,9 @@
         <i class="delete-button fa-solid fa-x text-gray-400">
         </i>
       </div>
-      <hr class="border-t border-gray-300 w-full mx-auto mt-4">
+      <hr class="border-t ${
+      darkMode ? "border-gray-700" : "border-gray-300"
+      } w-full mx-auto mt-4">
       `;
 
       //clicking on checkBtn
@@ -194,6 +197,7 @@
   }
 
   renderTodos();
+  themeChange();
 
   //adding new todos
   function addTodos() {
@@ -276,11 +280,21 @@
         document.body.classList.remove("bg-[#dde3e9]");
         document.body.classList.add("bg-[#161722]");
 
+        todoInput.classList.remove("text-gray-500");
+        todoInput.classList.add("text-white");
+        todoInput.classList.add("placeholder:text-gray-500");
+
+        filterCard.classList.remove("bg-white");
+        filterCard.classList.add("bg-[#25273c]");
+
         appContainer.classList.remove("bg-[#f6f6f8]");
         appContainer.classList.add("bg-[#161722]");
 
         inputContainer.classList.remove("bg-white");
         inputContainer.classList.add("bg-[#25273c]");
+
+        todoList.classList.remove("bg-white");
+        todoList.classList.add("bg-[#25273c]");
 
         header.style.backgroundImage =
           "url('./images/bg-mobile-dark.jpg')";
@@ -289,12 +303,21 @@
       } else {
         document.body.classList.remove("bg-[#161722]");
         document.body.classList.add("bg-[#dde3e9]");
+        todoInput.classList.remove("text-white");
+        todoInput.classList.add("text-gray-500");
+        todoInput.classList.remove("placeholder:text-gray-500");
 
         appContainer.classList.remove("bg-[#161722]");
         appContainer.classList.add("bg-[#f6f6f8]");
 
         inputContainer.classList.remove("bg-[#25273c]");
         inputContainer.classList.add("bg-white");
+
+        filterCard.classList.remove("bg-[#25273c]");
+        filterCard.classList.add("bg-white");
+
+        todoList.classList.remove("bg-[#25273c]");
+        todoList.classList.add("bg-white");
 
         header.style.backgroundImage =
           "url('./images/bg-mobile-light.jpg')";
@@ -304,6 +327,7 @@
 
      themeToggle.addEventListener("click", () => {
       darkMode = !darkMode;
+      localStorage.setItem("darkMode", JSON.stringify(darkMode));
       themeChange();
       renderTodos();
      })
