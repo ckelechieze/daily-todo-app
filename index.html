@@ -22,16 +22,16 @@
 </head>
 <body class="bg-[#dde3e9]">
   <!-- Container -->
-   <section class="bg-[#f6f6f8] m-2 mb-12 pb-8 shadow-[8px_8px_15px_rgba(0,0,0,0.15)]">
+   <section id="app-container" class="bg-[#f6f6f8] mb-12 pb-8 shadow-[8px_8px_15px_rgba(0,0,0,0.15)]">
     <!-- Header -->
-    <header class="h-48 bg-center bg-cover" style="background-image: url('./images/bg-mobile-light.jpg')">
+    <header id="header" class="h-48 bg-center bg-cover" style="background-image: url('./images/bg-mobile-light.jpg')">
       <!-- Logo/moon-->
        <div class="flex items-start justify-between w-full px-4 py-8">
         <h1 class="text-xl font-bold tracking-[0.4em] text-white">TODO</h1>
-        <img class="w-[20px] h-[20px]" src="./images/icon-moon.svg" alt="">
+        <img id="theme-toggle" class="w-[20px] h-[20px] cursor-pointer" src="./images/icon-moon.svg" alt="">
        </div>
        <!-- New todo-->
-       <div class="w-[90%] h-12 bg-white mx-auto rounded-lg flex items-center pl-4 gap-4">
+       <div id="input-container" class="w-[90%] h-12 bg-white mx-auto rounded-lg flex items-center pl-4 gap-4">
         <div class="w-4 h-4 rounded-full border-2 border-gray-200">
         </div>
         <input 
@@ -104,14 +104,19 @@
     ];
 
     let filter = "all";
+    let darkMode = false;
 
     const addBtn = document.getElementById("add-button");
     const todoInput = document.getElementById("todo-input");
     const clearCompletedBtn = document.getElementById("clear-completed");
+    const themeToggle = document.getElementById("theme-toggle");
 
     const All = document.getElementById("all-filter");
     const Active = document.getElementById("active-filter");
     const Completed = document.getElementById("completed-filter");
+    const appContainer = document.getElementById("app-container");
+    const header = document.getElementById("header");
+    const inputContainer = document.getElementById("input-container");
 
 
     // Todo render function
@@ -135,7 +140,7 @@
       const todoEl = document.createElement("div");
 
       todoEl.innerHTML = `
-      <div class="flex items-center justify-between px-2 gap-6 pt-6">
+      <div class="flex items-center justify-between px-2 gap-6 pt-6 ${darkMode ? "bg-[#25273c]" : "bg-white"}">
         <div class="flex items-center gap-4">
           <div class="todo-check flex w-8 h-8 rounded-full border-2 border-gray-200 items-center justify-center
           ${todo.completed 
@@ -144,7 +149,13 @@
           ">
           ${todo.completed ? '<i class="fa-solid fa-check"></i>' : ''}
           </div>
-          <p class="${todo.completed ? 'line-through text-gray-400' : ''}">
+          <p class="${
+          todo.completed 
+          ? 'line-through text-gray-400' 
+          : darkMode
+          ? "text-white"
+          : "text-black"
+          }">
             ${todo.text}</p>
         </div>
         <i class="delete-button fa-solid fa-x text-gray-400">
@@ -258,6 +269,45 @@
      }
     
      updateFilterColor();
+
+     // Function for changing theme
+     function themeChange() {
+      if (darkMode) {
+        document.body.classList.remove("bg-[#dde3e9]");
+        document.body.classList.add("bg-[#161722]");
+
+        appContainer.classList.remove("bg-[#f6f6f8]");
+        appContainer.classList.add("bg-[#161722]");
+
+        inputContainer.classList.remove("bg-white");
+        inputContainer.classList.add("bg-[#25273c]");
+
+        header.style.backgroundImage =
+          "url('./images/bg-mobile-dark.jpg')";
+        themeToggle.src = "./images/icon-sun.svg";
+
+      } else {
+        document.body.classList.remove("bg-[#161722]");
+        document.body.classList.add("bg-[#dde3e9]");
+
+        appContainer.classList.remove("bg-[#161722]");
+        appContainer.classList.add("bg-[#f6f6f8]");
+
+        inputContainer.classList.remove("bg-[#25273c]");
+        inputContainer.classList.add("bg-white");
+
+        header.style.backgroundImage =
+          "url('./images/bg-mobile-light.jpg')";
+        themeToggle.src = "./images/icon-moon.svg";
+      }
+     }
+
+     themeToggle.addEventListener("click", () => {
+      darkMode = !darkMode;
+      themeChange();
+      renderTodos();
+     })
+
    </script>
 </body>
 </html>

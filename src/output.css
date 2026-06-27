@@ -7,12 +7,15 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-600: oklch(57.7% 0.245 27.325);
+    --color-green-400: oklch(79.2% 0.209 151.711);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-600: oklch(44.6% 0.03 256.802);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-sm: 0.875rem;
@@ -181,9 +184,6 @@
   .static {
     position: static;
   }
-  .m-2 {
-    margin: calc(var(--spacing) * 2);
-  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -250,8 +250,14 @@
   .w-full {
     width: 100%;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .resize {
+    resize: both;
   }
   .items-center {
     align-items: center;
@@ -280,6 +286,10 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
@@ -297,11 +307,44 @@
   .bg-\[\#606de1\] {
     background-color: #606de1;
   }
+  .bg-\[\#25273c\] {
+    background-color: #25273c;
+  }
+  .bg-\[\#161620\] {
+    background-color: #161620;
+  }
+  .bg-\[\#161622\] {
+    background-color: #161622;
+  }
+  .bg-\[\#161722\] {
+    background-color: #161722;
+  }
+  .bg-\[\#\] {
+    background-color: #;
+  }
+  .bg-\[\#d\] {
+    background-color: #d;
+  }
+  .bg-\[\#dde3\] {
+    background-color: #dde3;
+  }
   .bg-\[\#dde3e9\] {
     background-color: #dde3e9;
   }
+  .bg-\[\#dde\] {
+    background-color: #dde;
+  }
   .bg-\[\#f6f6f8\] {
     background-color: #f6f6f8;
+  }
+  .bg-black {
+    background-color: var(--color-black);
+  }
+  .bg-green-400 {
+    background-color: var(--color-green-400);
+  }
+  .bg-red-600 {
+    background-color: var(--color-red-600);
   }
   .bg-white {
     background-color: var(--color-white);
@@ -396,6 +439,9 @@
     --tw-tracking: 0.4em;
     letter-spacing: 0.4em;
   }
+  .text-black {
+    color: var(--color-black);
+  }
   .text-blue-400 {
     color: var(--color-blue-400);
   }
@@ -410,6 +456,9 @@
   }
   .line-through {
     text-decoration-line: line-through;
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .shadow-\[8px_8px_15px_rgba\(0\,0\,0\,0\.15\)\] {
     --tw-shadow: 8px 8px 15px var(--tw-shadow-color, rgba(0,0,0,0.15));
@@ -445,13 +494,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-600);
-      }
-    }
-  }
-  .hover\:text-gray-600 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-gray-600);
       }
     }
   }
