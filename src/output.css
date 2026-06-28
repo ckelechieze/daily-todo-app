@@ -9,7 +9,6 @@
       "Courier New", monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
-    --color-green-400: oklch(79.2% 0.209 151.711);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-gray-300: oklch(87.2% 0.01 258.338);
@@ -252,8 +251,23 @@
   .w-full {
     width: 100%;
   }
+  .min-w-0 {
+    min-width: 0;
+  }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
+  .shrink-0 {
+    flex-shrink: 0;
+  }
   .border-collapse {
     border-collapse: collapse;
+  }
+  .cursor-move {
+    cursor: move;
   }
   .cursor-pointer {
     cursor: pointer;
@@ -309,20 +323,8 @@
   .border-gray-700 {
     border-color: var(--color-gray-700);
   }
-  .bg-\[\#2\] {
-    background-color: #2;
-  }
-  .bg-\[\#25\] {
-    background-color: #25;
-  }
-  .bg-\[\#252\] {
-    background-color: #252;
-  }
   .bg-\[\#606de1\] {
     background-color: #606de1;
-  }
-  .bg-\[\#25273\] {
-    background-color: #25273;
   }
   .bg-\[\#25273c\] {
     background-color: #25273c;
@@ -330,23 +332,20 @@
   .bg-\[\#161722\] {
     background-color: #161722;
   }
-  .bg-\[\#\] {
-    background-color: #;
-  }
   .bg-\[\#dde3e9\] {
     background-color: #dde3e9;
   }
   .bg-\[\#f6f6f8\] {
     background-color: #f6f6f8;
   }
-  .bg-red-500 {
-    background-color: var(--color-red-500);
-  }
-  .bg-red-600 {
-    background-color: var(--color-red-600);
-  }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .bg-white\/50 {
+    background-color: color-mix(in srgb, #fff 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+    }
   }
   .bg-gradient-to-b {
     --tw-gradient-position: to bottom in oklab;

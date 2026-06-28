@@ -152,7 +152,7 @@
       // dropping a todo on another todo
       todoEl.addEventListener("dragover", (e) => {
         e.preventDefault();
-        todoEl.classList.add("bg-gray-100");
+        todoEl.classList.add("bg-white/50");
       })
       todoEl.addEventListener("drop", () => {
         const draggedTodo = todos.splice(draggedIndex, 1)[0];
@@ -165,7 +165,7 @@
 
       todoEl.innerHTML = `
       <div class="flex items-center justify-between px-2 gap-6 pt-6 ${darkMode ? "bg-[#25273c]" : "bg-white"}">
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 shrink-0 min-w-0 flex-1">
           <div class="todo-check flex w-8 h-8 rounded-full border-2 border-gray-200 items-center justify-center
           ${todo.completed 
           ? 'bg-gradient-to-b from-[#79b4fb] to-[#803bd0] text-white' 
@@ -173,7 +173,7 @@
           ">
           ${todo.completed ? '<i class="fa-solid fa-check"></i>' : ''}
           </div>
-          <p class="${
+          <p class="min-w-0 flex-1 ${
           todo.completed 
           ? 'line-through text-gray-400' 
           : darkMode
